@@ -1,9 +1,13 @@
 import fitz
 import uuid
 import os
+import shutil
 
 from tkinter import filedialog, messagebox
 from controller.gerar_assinatura_controller import assinar_documentos_pdfa
+
+FILENAME = uuid.uuid4()
+PATH = os.path.dirname(os.path.abspath(__file__)) + "/input/" + str(FILENAME) + ".pdf"
 
 
 def selecionar_pdf():
@@ -12,7 +16,12 @@ def selecionar_pdf():
         title="Selecione um arquivo PDF", filetypes=[("Arquivos PDF", "*.pdf")]
     )
     if caminho_arquivo:
-        transform_to_pdfa(caminho_arquivo)
+
+        print("Arquivo selecionado:", caminho_arquivo)
+        print("Caminho do arquivo:", PATH)
+
+        shutil.copy(caminho_arquivo, PATH)
+        transform_to_pdfa(PATH)
     else:
         messagebox.showerror("Erro", "Nenhum arquivo selecionado.")
 
@@ -39,9 +48,9 @@ def transform_to_pdfa(caminho_arquivo):
         }
     )
 
-    uuid_filename = uuid.uuid4()
-    doc.save(f"./input/{uuid_filename}", garbage=4, deflate=True, clean=True)
-    print("PDF/A convertido e salvo em ./input")
+    path_input = f"./input/{FILENAME}"
 
-    assinar_documentos_pdfa(f"./input/{uuid_filename}")
+    doc.save(path_input, garbage=4, deflate=True, clean=True)
+    print("PDF/A convertido e salvo em:", path_input)
+    assinar_documentos_pdfa(path_input)
     doc.close()

@@ -13,9 +13,13 @@ from reportlab.lib.utils import ImageReader
 
 import io
 import os
+import uuid
 
 chave_privada = ec.generate_private_key(ec.SECP256R1())
 chave_publica = chave_privada.public_key()
+
+
+FILENAME = uuid.uuid4()
 
 # Serializando a chave privada
 chave_privada_pem = chave_privada.private_bytes(
@@ -96,9 +100,9 @@ def assinar_documentos_pdfa(documento_pdfa):
     primeira_pagina.merge_page(qr_pdf.pages[0])
 
     # Salva o PDF assinado
-    caminho_pdf_assinado = os.path.join(
-        os.path.dirname(documento_pdfa), f"assinado_{os.path.basename(documento_pdfa)}"
-    )
+    caminho_pdf_assinado = os.path.dirname(os.path.abspath(__file__)) + "/output/" + str(FILENAME) + "_assinado.pdf"
+
+    os.makedirs(os.path.dirname(caminho_pdf_assinado), exist_ok=True)
 
     with open(caminho_pdf_assinado, "wb") as f:
         escritor.write(f)
