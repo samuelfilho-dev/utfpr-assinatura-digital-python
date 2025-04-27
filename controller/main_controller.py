@@ -48,9 +48,7 @@ def transform_to_pdfa(caminho_arquivo):
         }
     )
 
-    path_input = f"./input/{FILENAME}"
-
-    doc.save(path_input, garbage=4, deflate=True, clean=True)
-    print("PDF/A convertido e salvo em:", path_input)
-    assinar_documentos_pdfa(path_input)
+    doc.save(PATH, garbage=4, deflate=True, clean=True, incremental=True)
+    print("PDF/A convertido e salvo em:", PATH)
+    assinar_documentos_pdfa(PATH)
     doc.close()
