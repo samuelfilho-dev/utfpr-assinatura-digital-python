@@ -17,10 +17,6 @@ def selecionar_pdf():
         title="Selecione um arquivo PDF", filetypes=[("Arquivos PDF", "*.pdf")]
     )
     if caminho_arquivo:
-
-        print("Arquivo selecionado:", caminho_arquivo)
-        print("Caminho do arquivo:", PATH)
-
         shutil.copy(caminho_arquivo, PATH)
         transform_to_pdfa(PATH)
     else:
@@ -54,7 +50,6 @@ def transform_to_pdfa(caminho_arquivo):
         doc.save(PATH, incremental=True, encryption=0)
         print("PDF/A convertido e salvo em:", PATH)
         assinar_documentos_pdfa(PATH)
-        doc.close()
     except Exception as e:
         print("Erro ao salvar o PDF/A:", e)
         messagebox.showerror("Erro", "Falha ao converter o PDF para PDF/A.")

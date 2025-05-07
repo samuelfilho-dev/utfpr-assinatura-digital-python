@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from controller.main_controller import selecionar_pdf
+from main_controller import selecionar_pdf
 
 root = tk.Tk()
 root.title("Coloque seu PDF")
