@@ -4,7 +4,7 @@ from main_controller import verificar_assinatura_pdf
 
 def verificar_assinatura_view(root):
     """
-    Função para criar a view de assinatura digital.
+    Função para criar a interface gráfica para verificar a assinatura de um PDF.
     :param root: Instância da janela principal do Tkinter.
     :return: None
     """

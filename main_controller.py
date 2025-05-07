@@ -74,10 +74,9 @@ def verificar_assinatura_pdf():
 
     redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
     hash_value = redis_client.get(file_name)
-    print(f'hash_value {hash_value}')
-    
+
     if hash_value:
         messagebox.showinfo("Sucesso", "Assinatura verificada com sucesso.")
     else:
-        messagebox.showerror("Erro", "Assinatura não encontrada.")
+        messagebox.showerror("Erro", "Assinatura com Problemas ou inválida.")
         
