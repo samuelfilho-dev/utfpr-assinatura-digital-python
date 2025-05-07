@@ -38,10 +38,8 @@ chave_publica_pem = chave_publica.public_bytes(
 def assinar_documentos_pdfa(documento_pdfa):
     """
     Função para assinar um documento PDF/A com uma assinatura digital.
-    A assinatura é gerada a partir do hash SHA-256 do conteúdo do PDF/A.
-    Um QR Code é gerado com a chave pública e a assinatura, e é adicionado ao PDF.
-    :param documento_pdfa: Caminho do arquivo PDF/A a ser assinado.
-    :return: None
+    :param documento_pdfa: Caminho para o arquivo PDF/A a ser assinado.
+    :return: Caminho para o arquivo PDF/A assinado.
     """
 
     # Verifica se o arquivo PDF/A foi fornecido
@@ -68,6 +66,12 @@ def assinar_documentos_pdfa(documento_pdfa):
 
 
 def criar_pdf_com_assinatura(documento_pdfa, qr_code):
+    """
+    Função para criar um novo PDF com a assinatura digital e o QR Code.
+    :param documento_pdfa: Caminho para o arquivo PDF/A a ser assinado.
+    :param qr_code: Imagem do QR Code a ser inserido no PDF.
+    :return: Caminho para o arquivo PDF assinado.
+    """
     doc = fitz.open(documento_pdfa)
 
     # Save QR code to a temporary buffer

@@ -25,10 +25,8 @@ def selecionar_pdf():
 
 def transform_to_pdfa(caminho_arquivo):
     """
-    Função para transformar um arquivo PDF em PDF/A.
-    Esta função adiciona metadados e salva o arquivo em um local temporário.
-    O arquivo PDF/A é uma versão do PDF que atende a requisitos específicos de arquivamento a longo prazo.
-    :param caminho_arquivo: Caminho do arquivo PDF a ser convertido.
+    Função para converter um arquivo PDF em PDF/A.
+    :param caminho_arquivo: Caminho para o arquivo PDF a ser convertido.
     :return: None
     """
     doc = fitz.open(caminho_arquivo)
