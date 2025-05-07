@@ -3,6 +3,7 @@ import uuid
 import os
 import shutil
 import gc
+import redis
 
 from tkinter import filedialog, messagebox
 from gerar_assinatura_controller import assinar_documentos_pdfa
@@ -55,3 +56,28 @@ def transform_to_pdfa(caminho_arquivo):
     finally:
         gc.enable()
         doc.close()
+
+def verificar_assinatura_pdf():
+    """
+    Função para verificar a assinatura digital de um arquivo PDF.
+    :return: None
+    """
+    caminho_arquivo = filedialog.askopenfilename(
+        title="Selecione um arquivo PDF", filetypes=[("Arquivos PDF", "*.pdf")]
+    )
+    
+    if not caminho_arquivo:
+        messagebox.showerror("Erro", "Nenhum arquivo selecionado.")
+        
+    name_file_with_ass_name = os.path.basename(caminho_arquivo).split(".")[0]
+    file_name = name_file_with_ass_name.split('_')[0]
+
+    redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
+    hash_value = redis_client.get(file_name)
+    print(f'hash_value {hash_value}')
+    
+    if hash_value:
+        messagebox.showinfo("Sucesso", "Assinatura verificada com sucesso.")
+    else:
+        messagebox.showerror("Erro", "Assinatura não encontrada.")
+        

@@ -14,7 +14,7 @@ from reportlab.lib.utils import ImageReader
 import io
 import os
 import uuid
-import base64
+import redis
 
 chave_privada = ec.generate_private_key(ec.SECP256R1())
 chave_publica = chave_privada.public_key()
@@ -59,6 +59,9 @@ def assinar_documentos_pdfa(documento_pdfa):
 
     # Assina o hash usando a chave privada e curva elíptica ECDSA
     assinatura = chave_privada.sign(hash_pdfa, ec.ECDSA(hashes.SHA256()))
+
+    redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
+    redis_client.set(str(FILENAME), assinatura.hex())
 
     qrcode = gerar_qr_code(chave_publica_pem, assinatura, hash_pdfa)
 
